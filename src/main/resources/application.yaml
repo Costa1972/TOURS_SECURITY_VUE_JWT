@@ -13,4 +13,5 @@ spring:
 jwt:
   secret: ServletservicforservletdispatcherServletincontextwithpathuyhjjhdkjdlkjljkdljdljkdlkjdlwldklkwjdkjwkdjwkjdkljsdjadjjdfkaejdfjdfjqefjdhjhhhdwejdhqkdjh3uwhd
   expiration: 3600000
+  refresh_token_duration: 86400000
 

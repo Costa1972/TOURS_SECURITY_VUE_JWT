@@ -1,4 +1,4 @@
-package ru.costa.tours_vue_jwt.security.entity;
+package ru.costa.tours_vue_jwt.security.entity.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

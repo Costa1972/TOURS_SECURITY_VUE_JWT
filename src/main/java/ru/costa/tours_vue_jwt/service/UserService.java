@@ -10,6 +10,7 @@ import ru.costa.tours_vue_jwt.entity.User;
 import ru.costa.tours_vue_jwt.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,5 +45,14 @@ public class UserService implements UserDetailsService {
                         .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                         .collect(Collectors.toSet())
         );
+    }
+
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User %s not found".formatted(id)));
     }
 }

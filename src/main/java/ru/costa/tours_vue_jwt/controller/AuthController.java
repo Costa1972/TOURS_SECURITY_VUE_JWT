@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.costa.tours_vue_jwt.entity.User;
-import ru.costa.tours_vue_jwt.security.entity.JwtRequest;
-import ru.costa.tours_vue_jwt.security.entity.JwtResponse;
+import ru.costa.tours_vue_jwt.security.entity.RefreshToken;
+import ru.costa.tours_vue_jwt.security.entity.requests.JwtRequest;
+import ru.costa.tours_vue_jwt.security.entity.respones.JwtResponse;
 import ru.costa.tours_vue_jwt.security.utils.JwtUtil;
+import ru.costa.tours_vue_jwt.service.RefreshTokenService;
 import ru.costa.tours_vue_jwt.service.UserService;
 
 import java.util.Set;
@@ -28,6 +30,7 @@ public class AuthController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final RefreshTokenService refreshTokenService;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/register")
@@ -43,12 +46,14 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String accessToken = jwtUtil.generateToken(userDetails.getUsername());
+        RefreshToken refreshToken = refreshTokenService.generateRefreshToken(jwtRequest.getUsername());
         Set<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
         return ResponseEntity.ok().body(
                 JwtResponse.builder()
                         .username(userDetails.getUsername())
                         .roles(roles)
                         .accessToken(accessToken)
+                        .refreshToken(refreshToken.getToken())
                         .build()
         );
     }
