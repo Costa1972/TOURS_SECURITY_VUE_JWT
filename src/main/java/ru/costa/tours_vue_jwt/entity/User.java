@@ -28,12 +28,14 @@ public class User implements Serializable {
     @Column(name = "patronymic")
     private String patronymic;
     @Column(name = "email_username")
-    private String emailAsUsername;
+    private String username;
+    @Column(name = "password")
+    private String password;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "password_id", referencedColumnName = "id")
-    @Fetch(FetchMode.JOIN)
-    private Password password;
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "password_id", referencedColumnName = "id")
+//    @Fetch(FetchMode.JOIN)
+//    private Password password;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "passport_id", referencedColumnName = "id")

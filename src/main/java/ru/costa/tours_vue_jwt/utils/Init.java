@@ -33,12 +33,12 @@ public class Init {
         roles.add(user);
         roles.add(admin);
 
-        Password password1 = Password.builder()
-                .value(passwordEncoder.encode("anton"))
-                .build();
-        Password password2 = Password.builder()
-                .value(passwordEncoder.encode("oleg"))
-                .build();
+//        Password password1 = Password.builder()
+//                .password(passwordEncoder.encode("anton"))
+//                .build();
+//        Password password2 = Password.builder()
+//                .password(passwordEncoder.encode("oleg"))
+//                .build();
 
         Passport passport1 = Passport.builder()
                 .series("4523")
@@ -69,10 +69,10 @@ public class Init {
                 .lastName("Антонов")
                 .firstName("Антон")
                 .patronymic("Антонович")
-                .emailAsUsername("anton@mail.ru")
+                .username("anton@mail.ru")
                 .phones(Set.of(homePhone1, mobilePhone1))
                 .passport(passport1)
-                .password(password1)
+                .password(passwordEncoder.encode("anton"))
                 .payments(Set.of(payment1, payment4))
                 .roles(Set.of(admin))
                 .build();
@@ -80,10 +80,10 @@ public class Init {
                 .lastName("Смирнов")
                 .firstName("Олег")
                 .patronymic("Валерьевич")
-                .emailAsUsername("oleg@mail.ru")
+                .username("oleg@mail.ru")
                 .phones(Set.of(homePhone2, mobilePhone2))
                 .passport(passport2)
-                .password(password2)
+                .password(passwordEncoder.encode("oleg"))
                 .payments(Set.of(payment3, payment2))
                 .roles(Set.of(user))
                 .build();

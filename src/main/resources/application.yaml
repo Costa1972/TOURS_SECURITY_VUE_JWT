@@ -10,3 +10,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+jwt:
+  secret: ServletservicforservletdispatcherServletincontextwithpathuyhjjhdkjdlkjljkdljdljkdlkjdlwldklkwjdkjwkdjwkjdkljsdjadjjdfkaejdfjdfjqefjdhjhhhdwejdhqkdjh3uwhd
+  expiration: 3600000
+

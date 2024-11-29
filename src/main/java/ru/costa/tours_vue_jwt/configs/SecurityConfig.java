@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.costa.tours_vue_jwt.security.filters.JwtAuthenticationFilter;
 import ru.costa.tours_vue_jwt.service.UserService;
 
 @Configuration
@@ -22,8 +24,10 @@ import ru.costa.tours_vue_jwt.service.UserService;
 public class SecurityConfig {
 
     private final UserService userService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -31,14 +35,16 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
                     httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint((request, response, authException) -> {
-                        response.sendRedirect("/hello");
+                        response.sendRedirect("/hello.html");
                     });
                 })
                 .authorizeHttpRequests(authorizeRequest -> {
+                    authorizeRequest.requestMatchers("/api/login").permitAll();
+                    authorizeRequest.requestMatchers("/api/register").permitAll();
                     authorizeRequest.requestMatchers("/users").hasRole("ADMIN");
-                    authorizeRequest.requestMatchers("/login").permitAll();
                     authorizeRequest.anyRequest().authenticated();
-                }).build();
+                }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
 
     }
     @Bean
