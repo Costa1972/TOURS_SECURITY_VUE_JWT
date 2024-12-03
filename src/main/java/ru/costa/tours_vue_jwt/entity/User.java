@@ -31,8 +31,20 @@ public class User implements Serializable {
     private String username;
     @Column(name = "password")
     private String password;
+    @Transient
+    private String confirmPassword;
 
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public User(Long id,
+                String username,
+                String password,
+                String confirmPassword) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.confirmPassword = password;
+    }
+
+    //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name = "password_id", referencedColumnName = "id")
 //    @Fetch(FetchMode.JOIN)
 //    private Password password;
@@ -57,4 +69,10 @@ public class User implements Serializable {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Fetch(FetchMode.JOIN)
     private Set<Role> roles;
+
+    public User(Long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
 }

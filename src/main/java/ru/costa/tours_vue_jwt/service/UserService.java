@@ -1,5 +1,6 @@
 package ru.costa.tours_vue_jwt.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
@@ -31,6 +33,10 @@ public class UserService implements UserDetailsService {
     public User findByEmail(String email) {
         return userRepository.findByUsername(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User %s not found".formatted(email)));
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     @Override
